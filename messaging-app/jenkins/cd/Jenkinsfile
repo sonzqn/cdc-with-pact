@@ -25,7 +25,7 @@ pipeline {
         sh 'curl -LO https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v1.61.1/pact-1.61.1-linux-x86_64.tar.gz'
         sh 'tar xzf pact-1.61.1-linux-x86_64.tar.gz'
         dir('pact/bin') {
-            sh "./pact-broker pact:publish -a=${GIT_COMMIT} -h=${BRANCH_NAME} -t=SIT -b http://pact_broker:9292"
+            sh "./pact-broker publish -a=${GIT_COMMIT} -h=${BRANCH_NAME} -t=SIT -b http://pact_broker:9292"
         }
       }
     }
