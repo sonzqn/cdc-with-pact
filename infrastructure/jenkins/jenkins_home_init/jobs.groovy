@@ -1,7 +1,7 @@
-def gitUrl = 'https://github.com/tinexw/cdc-with-pact'
+def gitUrl = 'https://github.com/sonzqn/cdc-with-pact'
 
 // Main build and deploy job for consumer and provider each (continuous deployment case)
-['messaging-app', 'user-service'].each {
+['product-catalogue', 'product-service'].each {
     def app = it
     pipelineJob("$app-build-and-deploy") {
         definition {
@@ -21,32 +21,8 @@ def gitUrl = 'https://github.com/tinexw/cdc-with-pact'
     }
 }
 
-// Separate build and deploy jobs for consumer and provider each (non-continuous deployment case)
-['messaging-app', 'user-service'].each {
-    def app = it
-    ['build', 'deploy'].each {
-        def phase = it
-        pipelineJob("$app-$phase") {
-            definition {
-                cpsScm {
-                    scm {
-                        git {
-                            remote {
-                                url(gitUrl)
-                            }
-                            branch('master')
-                            extensions {}
-                        }
-                    }
-                    scriptPath("$app/jenkins/without-cd/Jenkinsfile-$phase")
-                }
-            }
-        }
-    }
-}
-
 // Branch job for consumer
-pipelineJob("messaging-app-branch-with-removed-field") {
+pipelineJob("product-catalogue-branch-with-removed-field") {
     definition {
         cpsScm {
             scm {
@@ -58,12 +34,13 @@ pipelineJob("messaging-app-branch-with-removed-field") {
                     extensions {}
                 }
             }
-            scriptPath("messaging-app/jenkins/cd/Jenkinsfile")
+            scriptPath("product-catalogue/jenkins/cd/Jenkinsfile")
         }
     }
 }
+
 // Provider job that only executes contract tests, usually triggered by webhook
-pipelineJob("user-service-run-contract-tests") {
+pipelineJob("product-service-run-contract-tests") {
     definition {
         cpsScm {
             scm {
@@ -75,7 +52,7 @@ pipelineJob("user-service-run-contract-tests") {
                     extensions {}
                 }
             }
-            scriptPath("user-service/jenkins/Jenkinsfile-contract-tests")
+            scriptPath("product-service/jenkins/Jenkinsfile-contract-tests")
         }
     }
 }

@@ -1,0 +1,16 @@
+#!groovy
+pipeline {
+
+  agent any
+
+  stages {
+    stage('Build') {
+      steps {
+        dir('product-service') {
+           sh '../mvnw clean verify'
+        }
+      }
+    }
+  }
+
+}
