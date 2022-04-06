@@ -31,8 +31,8 @@ pipeline {
     }
     stage('Check Pact Verifications') {
       steps {
-        dir('messaging-app') {
-           sh 'mvn  pact:can-i-deploy -Dpacticipant=messaging-app'
+        dir('pact/bin') {
+          sh "./pact-broker can-i-deploy --retry-while-unknown=3 --retry-interval=10 -a messaging-app -b http://localhost:9292 -e ${GIT_COMMIT} -v true"
         }
       }
     }
