@@ -29,7 +29,7 @@ pipeline {
     stage('Check Pact Verifications') {
       steps {
         dir('messaging-app') {
-           sh '../mvnw  pact:can-i-deploy -Dpacticipant='messaging-app'
+           sh '../mvnw  pact:can-i-deploy -Dpacticipant=messaging-app'
         }
       }
     }
