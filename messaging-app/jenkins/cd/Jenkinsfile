@@ -23,7 +23,7 @@ pipeline {
     stage('Publish Pacts') {
       steps {
         dir('messaging-app') {
-           sh 'mvn pact:publish -Dpact.consumer.version=${GIT_COMMIT} -Dpact.tag=${BRANCH_NAME}'
+           sh 'mvn pact:publish'
         }
       }
     }
