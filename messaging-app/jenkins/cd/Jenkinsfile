@@ -33,6 +33,9 @@ pipeline {
         dir('pact/bin') {
           sh "./pact-broker can-i-deploy --retry-while-unknown=12 --retry-interval=10 -a messaging-app -b http://pact_broker -e ${GIT_COMMIT}"
         }
+        dir('messaging-app') {
+           sh '../mvnw  pact:can-i-deploy -Dpacticipant='messaging-app'
+        }
       }
     }
     stage('Deploy') {
