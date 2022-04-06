@@ -2,3 +2,5 @@ infrastructure/jenkins/jenkins_home/
 .idea/
 *.iml
 target/
+/pact/
+/pact-1.88.83-linux-x86_64.tar.gz
