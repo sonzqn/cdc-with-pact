@@ -9,7 +9,7 @@
     "method": "POST",
     "url": "http://127.0.0.1:8080/job/product-service-run-contract-tests/buildWithParameters?pactConsumerTags=${pactbroker.consumerVersionTags}",
     "username": "sonnd4",
-    "password": "11eab3a793aa39e8399e0ee85139e1786b",
+    "password": "11a28262982b94da5fba8f787b5fffeecd",
     "headers": {
       "Accept": "application/json"
     }
