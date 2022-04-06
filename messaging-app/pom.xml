@@ -55,7 +55,7 @@
         <version>${pact.version}</version>
         <configuration>
           <!-- pact_broker is the service name in docker-compose -->
-          <pactBrokerUrl>http://localhost:9292</pactBrokerUrl>
+          <pactBrokerUrl>http://pactbroker:9292</pactBrokerUrl>
           <projectVersion>${GIT_COMMIT}</projectVersion> <!-- Defaults to ${project.version} -->
           <branchName>${BRANCH_NAME}</branchName>
           <trimSnapshot>true</trimSnapshot> <!-- Defaults to false -->
