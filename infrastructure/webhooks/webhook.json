@@ -1,13 +1,13 @@
 {
   "consumer": {
-    "name": "product-catalogue"
+    "name": "ProductCatalogue"
   },
   "provider": {
-    "name": "product-service"
+    "name": "ProductService"
   },
   "request": {
     "method": "POST",
-    "url": "http://jenkins:8080/job/product-service-run-contract-tests/buildWithParameters?pactConsumerTags=${pactbroker.consumerVersionTags}",
+    "url": "http://localhost:8080/job/product-service-run-contract-tests/buildWithParameters?pactConsumerTags=${pactbroker.consumerVersionTags}",
     "headers": {
       "Accept": "application/json"
     }
