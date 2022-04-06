@@ -2,12 +2,12 @@ package de.kreuzwerker.cdc.messagingapp;
 
 import au.com.dius.pact.consumer.MockServer;
 import au.com.dius.pact.consumer.dsl.DslPart;
+import au.com.dius.pact.consumer.dsl.PactDslJsonBody;
 import au.com.dius.pact.consumer.dsl.PactDslWithProvider;
 import au.com.dius.pact.consumer.junit5.PactConsumerTestExt;
 import au.com.dius.pact.consumer.junit5.PactTestFor;
 import au.com.dius.pact.core.model.RequestResponsePact;
 import au.com.dius.pact.core.model.annotations.Pact;
-import io.pactfoundation.consumer.dsl.LambdaDsl;
 import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,15 +40,15 @@ public class UserServiceContractTest {
     public RequestResponsePact pactUserExists(PactDslWithProvider builder) {
 
         // See https://github.com/DiUS/pact-jvm/tree/master/pact-jvm-consumer-junit#dsl-matching-methods
-        DslPart body = LambdaDsl.newJsonBody((o) -> o
+        DslPart body = new PactDslJsonBody()
                 .stringType("name", NAME)
-                .timestamp("lastLogin", "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+                .time("lastLogin", "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
                         Date.from(LAST_LOGIN.atZone(ZoneId.systemDefault()).toInstant()))
                 .stringMatcher("role", "ADMIN|USER", "ADMIN")
-                .minArrayLike("friends", 0, 2, friend -> friend
-                        .stringType("id", "2")
-                        .stringType("name", "a friend")
-                )).build();
+                .minArrayLike("friends", 0, 2)
+                .stringType("id", "2")
+                .stringType("name", "a friend")
+                .closeObject();
 
         return builder.given(
                         "User 1 exists")
