@@ -1,2 +1,3 @@
-user-service:
-  base-url: "http://localhost:8090"
+serviceClients:
+  products:
+    baseUrl: "http://localhost:9000"
