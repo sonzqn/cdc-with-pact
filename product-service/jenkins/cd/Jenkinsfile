@@ -21,7 +21,7 @@ pipeline {
         sh 'curl -LO https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v1.88.83/pact-1.88.83-linux-x86_64.tar.gz'
         sh 'tar xzf pact-1.88.83-linux-x86_64.tar.gz'
         dir('pact/bin') {
-          sh "./pact-broker can-i-deploy -a product-service -b http://localhost:9292 -e ${GIT_COMMIT}"
+          sh "./pact-broker can-i-deploy -a ProductService -b http://localhost:9292 -e ${GIT_COMMIT}"
         }
       }
     }
