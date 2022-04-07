@@ -26,17 +26,18 @@ pipeline {
         dir('pact/bin') {
           script {
             env.PROD_VERSION = sh(script: "./pact-broker describe-version -a ProductService -b http://localhost:9292 -l prod | tail -1 | cut -f 1 -d \\|", returnStdout: true).trim()
+            if (env.PROD_VERSION == 'Pacticipant version not found') {
+               dir('product-service') {
+                 sh "mvn clean verify" +
+                                   "-Dpact.provider.version=${GIT_COMMIT} " +
+                                   "-Dpact.verifier.publishResults=true " +
+                                   "-Dpactbroker.tags=prod,${params.pactConsumerTags}"
+               }
+            }
           }
         }
         echo "Current prod version: " + PROD_VERSION
-        if (env.PROD_VERSION == 'Pacticipant version not found') {
-           dir('product-service') {
-             sh "mvn clean verify" +
-                               "-Dpact.provider.version=${GIT_COMMIT} " +
-                               "-Dpact.verifier.publishResults=true " +
-                               "-Dpactbroker.tags=prod,${params.pactConsumerTags}"
-           }
-        }
+
       }
     }
     stage('Check Pact Verifications') {
