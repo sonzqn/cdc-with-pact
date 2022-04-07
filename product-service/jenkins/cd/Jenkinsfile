@@ -17,9 +17,6 @@ pipeline {
       }
     }
     stage ('Get Latest Prod Version From Pact Broker') {
-      when {
-        branch 'master'
-      }
       steps {
         sh 'curl -LO https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v1.88.83/pact-1.88.83-linux-x86_64.tar.gz'
         sh 'tar xzf pact-1.88.83-linux-x86_64.tar.gz'
