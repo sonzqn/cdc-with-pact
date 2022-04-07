@@ -9,13 +9,6 @@ pipeline {
   }
 
   stages {
-    stage ('Build & Test') {
-      steps {
-        dir('product-service') {
-          echo "build & test"
-        }
-      }
-    }
     stage ('Get Latest Prod Version From Pact Broker') {
       steps {
         sh 'curl -LO https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v1.88.83/pact-1.88.83-linux-x86_64.tar.gz'
@@ -25,18 +18,22 @@ pipeline {
             env.PROD_VERSION = sh(script: "./pact-broker describe-version -a ProductService -b http://localhost:9292 -l prod | tail -1 | cut -f 1 -d \\|", returnStdout: true).trim()
           }
         }
+        echo "Current prod version: " + PROD_VERSION
+      }
+    }
+    stage ('Build & Test') {
+      steps {
         dir('product-service') {
-          script {
-            if (env.PROD_VERSION == 'Pacticipant version not found') {
-              sh "mvn clean verify " +
+          if (env.PROD_VERSION == 'Pacticipant version not found') {
+            env.TAG_PROVIDER = 'prod'
+          } else {
+            env.TAG_PROVIDER = 'sit'
+          }
+          sh "mvn clean verify " +
                  "-Dpact.provider.version=${GIT_COMMIT} " +
                  "-Dpact.verifier.publishResults=true " +
-                 "-Dpact.provider.tag=prod"
-            }
-          }
+                 "-Dpact.provider.tag=${TAG_PROVIDER}"
         }
-        echo "Current prod version: " + PROD_VERSION
-
       }
     }
     stage('Check Pact Verifications') {
