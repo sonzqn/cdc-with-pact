@@ -28,12 +28,10 @@ pipeline {
         dir('product-service') {
           script {
             if (env.PROD_VERSION == 'Pacticipant version not found') {
-               dir('product-service') {
-                 sh "mvn clean verify" +
-                                   "-Dpact.provider.version=${GIT_COMMIT} " +
-                                   "-Dpact.verifier.publishResults=true " +
-                                   "-Dpactbroker.tags=prod,${params.pactConsumerTags}"
-               }
+              sh "mvn clean verify" +
+                               "-Dpact.provider.version=${GIT_COMMIT} " +
+                               "-Dpact.verifier.publishResults=true " +
+                               "-Dpactbroker.tags=prod,${params.pactConsumerTags}"
             }
           }
         }
