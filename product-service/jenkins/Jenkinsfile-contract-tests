@@ -34,7 +34,7 @@ pipeline {
     stage ('Run Contract Tests') {
       steps {
         dir('product-service') {
-          sh "../mvnw clean test " +
+          sh "mvn clean test " +
                   "-Pcontract-tests " +
                   "-Dpact.provider.version=${PROD_VERSION} " +
                   "-Dpact.verifier.publishResults=true " +
