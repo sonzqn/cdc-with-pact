@@ -9,10 +9,10 @@ pipeline {
   }
 
   stages {
-    stage ('Build') {
+    stage ('Build & Test') {
       steps {
         dir('product-service') {
-          sh "mvn clean verify"
+          echo "build & test"
         }
       }
     }
@@ -23,6 +23,10 @@ pipeline {
         dir('pact/bin') {
           script {
             env.PROD_VERSION = sh(script: "./pact-broker describe-version -a ProductService -b http://localhost:9292 -l prod | tail -1 | cut -f 1 -d \\|", returnStdout: true).trim()
+          }
+        }
+        dir('product-service') {
+          script {
             if (env.PROD_VERSION == 'Pacticipant version not found') {
                dir('product-service') {
                  sh "mvn clean verify" +
