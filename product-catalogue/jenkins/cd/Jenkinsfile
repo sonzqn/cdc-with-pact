@@ -32,7 +32,7 @@ pipeline {
     stage('Check Pact Verifications') {
       steps {
         dir('pact/bin') {
-          sh "./pact-broker can-i-deploy --retry-while-unknown=4 --retry-interval=10 -a ProductCatalogue -b http://localhost:9292 -e ${GIT_COMMIT} -v true"
+          sh "./pact-broker can-i-deploy --retry-while-unknown=4 --retry-interval=10 -a ProductCatalogue -b http://localhost:9292 -e ${GIT_COMMIT} -t prod -v true"
         }
       }
     }
