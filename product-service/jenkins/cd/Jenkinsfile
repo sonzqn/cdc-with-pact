@@ -24,15 +24,17 @@ pipeline {
     stage ('Build & Test') {
       steps {
         dir('product-service') {
-          if (env.PROD_VERSION == 'Pacticipant version not found') {
-            env.TAG_PROVIDER = 'prod'
-          } else {
-            env.TAG_PROVIDER = 'sit'
-          }
-          sh "mvn clean verify " +
+          script {
+            if (env.PROD_VERSION == 'Pacticipant version not found') {
+              env.TAG_PROVIDER = 'prod'
+            } else {
+              env.TAG_PROVIDER = 'sit'
+            }
+            sh "mvn clean verify " +
                  "-Dpact.provider.version=${GIT_COMMIT} " +
                  "-Dpact.verifier.publishResults=true " +
                  "-Dpact.provider.tag=${TAG_PROVIDER}"
+          }
         }
       }
     }
