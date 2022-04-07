@@ -42,7 +42,6 @@ class ProductServiceClientPactTest {
                                 .integerType("id", 9L)
                                 .stringType("name", "Gem Visa")
                                 .stringType("type", "CREDIT_CARD")
-                                .nullValue("version")
                                 .closeObject()
                                 .closeArray()
                 )
