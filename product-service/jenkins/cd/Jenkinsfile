@@ -28,7 +28,7 @@ pipeline {
         dir('product-service') {
           script {
             if (env.PROD_VERSION == 'Pacticipant version not found') {
-              sh "mvn clean verify " +
+              sh "mvn clean pact:verify " +
                                "-Dpact.provider.version=${GIT_COMMIT} " +
                                "-Dpact.verifier.publishResults=true " +
                                "-Dpactbroker.tags=prod"
