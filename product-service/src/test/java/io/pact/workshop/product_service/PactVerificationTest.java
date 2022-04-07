@@ -75,7 +75,7 @@ public class PactVerificationTest {
     long productId = ((Number) params.get("id")).longValue();
     Optional<Product> product = productRepository.findById(productId);
     if (!product.isPresent()) {
-      productRepository.save(new Product(productId, "Product", "TYPE", "v1", null));
+      productRepository.save(new Product(productId, "Product", "TYPE", "v1", "001"));
     }
   }
 
