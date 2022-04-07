@@ -31,7 +31,7 @@ pipeline {
               sh "mvn clean verify " +
                                "-Dpact.provider.version=${GIT_COMMIT} " +
                                "-Dpact.verifier.publishResults=true " +
-                               "-Dpactbroker.tags=prod,${params.pactConsumerTags}"
+                               "-Dpactbroker.tags=prod"
             }
           }
         }
